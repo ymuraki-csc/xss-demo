@@ -72,6 +72,8 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
       - uses: pnpm/action-setup@v2.2.2
+        with:
+          version: 8.6.7
       - name: Install dependencies
         run: pnpm i
       - name: Build with Next.js
