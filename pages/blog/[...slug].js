@@ -3,6 +3,8 @@ import PageTitle from '@/components/PageTitle'
 import generateRss from '@/lib/generate-rss'
 import { MDXLayoutRenderer } from '@/components/MDXComponents'
 import { formatSlug, getAllFilesFrontMatter, getFileBySlug, getFiles } from '@/lib/mdx'
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
 
 const DEFAULT_LAYOUT = 'PostLayout'
 
@@ -43,6 +45,12 @@ export async function getStaticProps({ params }) {
 export default function Blog({ post, authorDetails, prev, next }) {
   const { mdxSource, toc, frontMatter } = post
 
+  const router = useRouter()
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window?.localStorage?.getItem('username')) {
+      router.push('/login?redirect_to=' + router.asPath)
+    }
+  }, [router])
   return (
     <>
       {frontMatter.draft !== true ? (
