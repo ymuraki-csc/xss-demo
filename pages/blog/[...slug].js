@@ -48,7 +48,7 @@ export default function Blog({ post, authorDetails, prev, next }) {
   const router = useRouter()
   useEffect(() => {
     if (typeof window === 'undefined' || !window?.localStorage?.getItem('username')) {
-      router.push('/login?redirect_to=' + router.asPath)
+      router.push(`/login?redirect_to=${router.basePath}${router.asPath}`)
     }
   }, [router])
   return (
