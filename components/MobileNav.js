@@ -1,8 +1,18 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Link from './Link'
 import headerNavLinks from '@/data/headerNavLinks'
 
+function logout() {
+  localStorage.removeItem('username')
+}
+
 const MobileNav = () => {
+  const [username, setUsername] = useState('')
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setUsername(window.localStorage.getItem('username'))
+    }
+  }, [])
   const [navShow, setNavShow] = useState(false)
 
   const onToggleNav = () => {
@@ -76,6 +86,16 @@ const MobileNav = () => {
               </Link>
             </div>
           ))}
+          <div className="px-12 py-4">
+            <Link
+              onClick={username ? logout : undefined}
+              href={username ? '' : '/login'}
+              target={undefined}
+              className="text-2xl font-bold tracking-widest text-gray-900 dark:text-gray-100"
+            >
+              {username ? 'Logout' : 'Login'}
+            </Link>
+          </div>
         </nav>
       </div>
     </div>
